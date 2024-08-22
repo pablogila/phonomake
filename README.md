@@ -1,4 +1,4 @@
-# Phonomake
+# PhonoMake
 
 Workflow for Phonopy calculations using Quantum ESPRESSO.
 
