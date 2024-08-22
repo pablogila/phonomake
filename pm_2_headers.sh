@@ -4,11 +4,31 @@ NAT_BY_HAND=0
 HEADER_FILE='scf.in'
 KEYWORD='!BEGIN_COORDINATES'
 
-# Check if the supercell contains '&CONTROL' and abort if it does
+# Check if the supercell files exist
 supercelltest=$(ls supercell-*.in | head -n 1)
+if [ ! -f "$supercelltest" ]; then
+    echo "ERROR: No supercell files found!"
+    return
+fi
+
+# Check if the supercell contains '&CONTROL' and abort if it does
 if grep -q '&CONTROL' "$supercelltest"; then
-  echo "ERROR: Found '&CONTROL' in $supercelltest, so seems like you already did this!"
+  echo "ERROR: Found '&CONTROL' in $supercelltest, seems like you already did this!"
   return
+fi
+
+# Check if the header file exists
+if [ ! -f "$HEADER_FILE" ]; then
+    echo "ERROR: $HEADER_FILE file was not found!"
+    return
+fi
+
+# Check if the keyword is found in the header file
+if ! grep -q "$KEYWORD" "$HEADER_FILE"; then
+    echo "ERROR: '$KEYWORD' keyword not found in $HEADER_FILE"
+    echo "       Write the keyword after the K_POINTS, just before"
+    echo "       the ATOMIC_SPECIES, CELL_PARAMETERS and ATOMIC_POSITIONS"
+    return
 fi
 
 # Extract the content from scf.in up to the keyword indicating the start of the old coordinates
@@ -30,9 +50,9 @@ else
         sed -i "0,/!nat =/!b; /!nat =/a\  nat = $NAT_BY_HAND" temp_header.txt
         echo "Updated  nat = $NAT_BY_HAND  manually, from NAT_BY_HAND inside this script"
     else
-        echo "ERROR: No 'nat' value found in $supercell."
+        echo "ERROR: No 'nat' value found in $supercelltest"
         echo "       Set it manually inside this script"
-        echo "       with  NAT_BY_HAND=nat"
+        echo "       with  'NAT_BY_HAND=nat'"
         rm temp_header.txt
         return
     fi
