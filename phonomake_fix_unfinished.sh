@@ -6,11 +6,6 @@
 # If the tail of the file does not contain "JOB DONE.", it re-runs the file, with the new memory limit
 # The scf.slurm file is used as a template for the new slurm files
 
-if [ ! -f "supercell-*.out" ]; then
-    echo "No supercell-*.out file was found. Wtf are you doing."
-    return
-fi
-
 # Prompt the user for the new memory value
 echo "Let's fix the unfinished 'supercell-*' calculations!"
 read -p "New memory limit (int, GB, 0 to keep old values):  " MEMORY
@@ -27,6 +22,13 @@ JOB_DONE="JOB DONE."
 SLURMS_FOLDER="slurms"
 
 for file in supercell-*.out; do
+
+    # Check that the file exists
+    if [ ! -f "$file" ]; then
+        echo "No $file file was found. Wtf are you doing."
+        return
+    fi
+
     tail=$(tail -n 200 "$file")
     # Skip the file if it ended properly
     if [[ $tail == *"$JOB_DONE"* ]]; then
