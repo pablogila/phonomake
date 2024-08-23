@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# For some weird reason Phonopy replaces 'unknown' atomic species, such as `H2`, to random ones
+# Phonopy has an issue (#412) in which it replaces 'unknown' atomic species, such as `H2`, to random ones
 # If the pseudos are properly set, it should not affect the previous Quantum ESPRESSO SCF calculation
 # This script should be a quick fix for the final phonopy.yaml
 # AbINS reads `H`, and knows that are deuteriums because of the mass, etc.
 
 FILE=phonopy.yaml
 
-echo "Let's fix the atomic species that Phonopy f*cked in the $FILE file!"
+echo "Let's fix the atomic species that Phonopy messed up in the $FILE file!"
 read -p "Symbol for the old atomic species to replace:  " OLD_ATOMS
 read -p "Symbol for the new atomic species:  " NEW_ATOMS
 
