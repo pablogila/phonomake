@@ -2,7 +2,7 @@
 
 NAT_BY_HAND=0
 HEADER_FILE='scf.in'
-KEYWORD='!BEGIN_COORDINATES'
+KEYWORD='!END_HEADER'
 
 # Check if the supercell files exist
 supercelltest=$(ls supercell-*.in | head -n 1)
