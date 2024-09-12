@@ -1,0 +1,8 @@
+# To sync calculation files from the cluster, excluding temporary files, with the command:
+# rsync -av --exclude-from=EXCLUDE.rsync hyperion://scratch/gila/CALCULATION/ .
+
+pseudo*
+tmp
+supercell*
+slurm*
+pm

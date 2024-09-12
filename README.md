@@ -62,6 +62,11 @@ In addition, there are some scripts to fix common errors in the calculations:
 - `pm/fix_unfinished.sh`
 - `pm/fix_yaml.sh`
 
+The file `EXCLUDE.rsync` can be used to exclude files from the manual rsync command, when copying the final results to your local machine, as
+```shell
+rsync -av --exclude-from=EXCLUDE.rsync CLUSTER://scratch/USER/CALCULATION/ .
+```
+
 
 ## What are these scripts doing to my beloved files?
 
