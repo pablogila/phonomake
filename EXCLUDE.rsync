@@ -6,3 +6,4 @@ tmp
 supercell*
 slurm*
 pm
+EXCLUDE.rsync
