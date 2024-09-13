@@ -12,6 +12,7 @@ KEYWORD='!BEGIN_COORDINATES'
 KEYWORD_HEADER='!END_HEADER'
 JOB_DONE="JOB DONE."
 TIME_EXCEEDED="Maximum CPU time exceeded"
+STEPS_EXCEEDED="The maximum number of steps has been reached."
 
 echo "Creating $SCF_IN file..."
 
@@ -32,6 +33,9 @@ if [[ $tail != *"$JOB_DONE"* ]]; then
     return
 elif [[ $tail == *"$TIME_EXCEEDED"* ]]; then
     echo "ERROR: $RELAX_OUT stopped due to time limit"
+    return
+elif [[ $tail == *"$STEPS_EXCEEDED"* ]]; then
+    echo "ERROR: $RELAX_OUT stopped due to max steps limit"
     return
 fi
 
