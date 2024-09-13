@@ -15,6 +15,7 @@ JOB_NAME_KEYWORD="JOB_NAME"
 INPUT_FILE_KEYWORD="INPUT_FILE"
 OUTPUT_FILE_KEYWORD="OUTPUT_FILE"
 TIME_EXCEEDED="Maximum CPU time exceeded"
+STEPS_EXCEEDED="The maximum number of steps has been reached."
 RESTART_MODE_KEYWORD="restart_mode"
 RESTART_MODE="restart_mode = 'restart'"
 START_MODE="restart_mode = 'from_scratch'"
@@ -32,7 +33,11 @@ for file in supercell-*.out; do
     tail=$(tail -n 200 "$file")
     # Skip the file if it ended properly
     if [[ $tail == *"$JOB_DONE"* ]]; then
-        if [[ $tail != *"$TIME_EXCEEDED"* ]]; then
+        if [[ $tail == *"$TIME_EXCEEDED"* ]]; then
+            echo "    $file exceeded time limit"
+        elif [[ $tail == *"$STEPS_EXCEEDED"* ]]; then
+            echo "    $file exceeded max steps limit"
+        else
             echo ">>> Skipped finished $file"
             continue
         fi
