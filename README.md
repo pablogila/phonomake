@@ -2,6 +2,15 @@
 
 Easy and automated workflow for Phonopy calculations using Quantum ESPRESSO.
 
+## DEPRECATED
+
+These scripts were ported to [Thoth](https://github.com/pablogila/Thoth) with more useful stuff.
+This is waaay easier to mantain and update than raw bash.
+More info [here](https://pablogila.github.io/Thoth/thoth/phonopy.html).  
+
+Old instructions remain below for past reference.
+
+---
 
 ## Workflow
 
